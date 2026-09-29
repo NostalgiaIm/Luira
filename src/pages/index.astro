@@ -1,17 +1,158 @@
 ---
-
+const title = "Dify 调控面板";
+const menuItems = [
+  { name: "概览", icon: "📊" },
+  { name: "应用管理", icon: "🧩" },
+  { name: "系统设置", icon: "⚙️" }
+];
 ---
 
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{title}</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="app-container">
+			<aside class="sidebar">
+				<div class="logo">
+					<span class="logo-icon">🤖</span>
+					<span class="logo-text">{title}</span>
+				</div>
+
+				<button id="new-chat-btn" class="new-chat-btn">➕ 新建对话</button>
+
+				<nav class="nav-menu">
+					{menuItems.map((item, index) => (
+						<a href="#" class={`nav-item ${index === 0 ? 'active' : ''}`} data-name={item.name}>
+							<span class="nav-icon">{item.icon}</span>
+							<span class="nav-text">{item.name}</span>
+						</a>
+					))}
+				</nav>
+
+				<div class="history-list">
+					<div class="history-title">最近会话</div>
+					<div id="history-items"></div>
+				</div>
+
+				<div class="sidebar-footer">
+					<p>状态: 已连接本地 Dify</p>
+				</div>
+			</aside>
+
+			<main class="main-content">
+				<header class="top-bar">
+					<h1 class="page-title">概览</h1>
+					<div class="user-info">
+						<button id="toggle-chat-btn" class="status-btn">隐藏会话</button>
+
+						<div class="bg-dropdown">
+							<button id="bg-toggle" class="status-btn">背景设置</button>
+							<div id="bg-panel" class="bg-panel hidden">
+								<div class="bg-row">
+									<label>背景图片：</label>
+									<input type="text" id="bg-url-input" placeholder="输入图片链接" />
+									<button id="bg-browse-btn" class="btn-small browse">浏览</button>
+									<input type="file" id="bg-file-input" accept="image/*" style="display: none;" />
+								</div>
+								<div class="bg-preview-container">
+									<div class="bg-preview-label">预览（背景图透明度）：</div>
+									<div class="bg-preview">
+										<div id="bg-preview-layer" class="bg-preview-layer"></div>
+										<span class="bg-preview-hint">背景预览区</span>
+									</div>
+								</div>
+								<div class="bg-row">
+									<label>图片透明度：</label>
+									<input type="range" id="bg-opacity" min="0" max="1" step="0.05" value="0.95" />
+									<span id="bg-opacity-value">0.95</span>
+								</div>
+								<div class="bg-row">
+									<label>模糊度：</label>
+									<input type="range" id="bg-blur" min="0" max="20" step="1" value="0" />
+									<span id="bg-blur-value">0px</span>
+								</div>
+								<div class="bg-row toggle-row">
+									<label>侧边栏背景：</label>
+									<input type="checkbox" id="bg-sidebar-toggle" checked />
+								</div>
+								<div class="bg-row toggle-row">
+									<label>聊天区背景：</label>
+									<input type="checkbox" id="bg-chat-toggle" checked />
+								</div>
+								<div class="bg-row toggle-row" style="border-top: 1px dashed #e5e7eb; padding-top: 10px; margin-top: 4px;">
+									<label style="color: #ef4444; font-weight: 600;">✨ 透明面板模式：</label>
+									<input type="checkbox" id="bg-transparent-toggle" />
+								</div>
+								<div class="bg-hint">开启后，所有面板完全透明，壁纸一览无余。文字仍能看清。</div>
+								<div class="bg-actions">
+									<button id="bg-save" class="btn-small save">保存</button>
+									<button id="bg-reset" class="btn-small reset">恢复默认</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="color-dropdown">
+							<button id="color-toggle" class="status-btn">主题颜色</button>
+							<div id="color-panel" class="color-panel hidden">
+								<div class="color-target-select">
+									<button class="target-btn active" data-target="bot">AI 气泡</button>
+									<button class="target-btn" data-target="user">用户气泡</button>
+									<button class="target-btn" data-target="accent">强调色</button>
+								</div>
+								<div class="color-picker-wrapper">
+									<span>调色盘：</span>
+									<input type="color" id="color-picker" />
+								</div>
+								<div class="color-actions">
+									<button id="color-save" class="btn-small save">保存</button>
+									<button id="color-cancel" class="btn-small cancel">取消</button>
+									<button id="color-reset" class="btn-small reset">恢复默认</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="status-dropdown">
+							<button id="status-toggle" class="status-btn">运行状态</button>
+							<div id="status-panel" class="status-panel hidden">
+								<div class="stat-row">
+									<span class="label">API 状态</span>
+									<span class="value green">已连接</span>
+								</div>
+								<div class="stat-row">
+									<span class="label">当前模型</span>
+									<span class="value">-</span>
+								</div>
+								<div class="stat-row">
+									<span class="label">今日调用</span>
+									<span class="value">0</span>
+								</div>
+							</div>
+						</div>
+						<span>管理员 👤</span>
+					</div>
+				</header>
+
+				<div class="content-body">
+					<div class="panel-card chat-panel">
+						<h2>聊天测试</h2>
+						<div id="chat-history" class="chat-history"></div>
+						<div class="chat-input-area">
+							<input type="text" id="chat-input" placeholder="输入消息，回车发送..." />
+							<button id="stop-btn" class="btn-stop hidden">⏹ 停止</button>
+							<button id="send-btn" class="btn-primary">发送</button>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<script>
+			import '../scripts/main';
+		</script>
 	</body>
 </html>

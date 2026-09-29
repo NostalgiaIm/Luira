@@ -17,6 +17,11 @@ pnpm-debug.log*
 .env
 .env.production
 
+# local project documentation
+README.md
+AGENTS.md
+CLAUDE.md
+
 # macOS-specific files
 .DS_Store
 
