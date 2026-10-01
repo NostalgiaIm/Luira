@@ -6,8 +6,16 @@ export function initUI() {
 			navItems.forEach(nav => nav.classList.remove('active'));
 			item.classList.add('active');
 			const name = item.getAttribute('data-name') || '概览';
+			const panelName = item.getAttribute('data-panel') || 'overview';
 			const titleEl = document.querySelector('.page-title');
 			if (titleEl) titleEl.textContent = name;
+
+			const panels = document.querySelectorAll('.view-panel');
+			const targetPanel = document.querySelector(`.view-panel[data-panel="${panelName}"]`);
+			if (targetPanel) {
+				panels.forEach(panel => panel.classList.add('hidden'));
+				targetPanel.classList.remove('hidden');
+			}
 		});
 	});
 

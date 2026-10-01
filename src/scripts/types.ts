@@ -20,3 +20,12 @@ export interface BgConfig {
 	chat: boolean;
 	transparent: boolean;
 }
+
+export interface CargoRiseDetectResponse {
+	ok: boolean;
+	action: string;
+	tool?: string;
+	message?: string;
+	code?: string;
+	data?: unknown;
+}
