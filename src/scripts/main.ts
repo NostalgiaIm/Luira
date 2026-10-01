@@ -6,10 +6,12 @@ import { initUI } from './ui';
 import { initBackground } from './background';
 import { initColors } from './colors';
 import { initChat } from './chat';
+import { initCargoRiseTools } from './tools-cargorise';
 
 document.addEventListener('DOMContentLoaded', () => {
 	initUI();
 	initBackground();
 	initColors();
 	initChat();
+	initCargoRiseTools();
 });

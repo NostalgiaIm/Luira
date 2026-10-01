@@ -1,9 +1,10 @@
 ---
 const title = "Dify 调控面板";
 const menuItems = [
-  { name: "概览", icon: "📊" },
-  { name: "应用管理", icon: "🧩" },
-  { name: "系统设置", icon: "⚙️" }
+  { name: "概览", icon: "📊", panel: "overview" },
+  { name: "CargoRise", icon: "🦀", panel: "cargorise" },
+  { name: "应用管理", icon: "🧩", panel: "overview" },
+  { name: "系统设置", icon: "⚙️", panel: "overview" }
 ];
 ---
 
@@ -27,7 +28,7 @@ const menuItems = [
 
 				<nav class="nav-menu">
 					{menuItems.map((item, index) => (
-						<a href="#" class={`nav-item ${index === 0 ? 'active' : ''}`} data-name={item.name}>
+						<a href="#" class={`nav-item ${index === 0 ? 'active' : ''}`} data-name={item.name} data-panel={item.panel}>
 							<span class="nav-icon">{item.icon}</span>
 							<span class="nav-text">{item.name}</span>
 						</a>
@@ -138,13 +139,60 @@ const menuItems = [
 				</header>
 
 				<div class="content-body">
-					<div class="panel-card chat-panel">
+					<div id="chat-panel" class="panel-card chat-panel view-panel" data-panel="overview">
 						<h2>聊天测试</h2>
 						<div id="chat-history" class="chat-history"></div>
 						<div class="chat-input-area">
 							<input type="text" id="chat-input" placeholder="输入消息，回车发送..." />
 							<button id="stop-btn" class="btn-stop hidden">⏹ 停止</button>
 							<button id="send-btn" class="btn-primary">发送</button>
+						</div>
+					</div>
+
+					<div id="cargorise-panel" class="panel-card cargorise-panel view-panel hidden" data-panel="cargorise">
+						<h2>CargoRise 工具</h2>
+						<div class="tool-body">
+							<section class="tool-section">
+								<div class="tool-section-header">
+									<div>
+										<h3>环境检测</h3>
+										<p>检测 CargoRise、Rust 工具链和常用 IDE 是否可用。</p>
+									</div>
+									<button id="cargorise-detect-btn" class="btn-primary">检测环境</button>
+								</div>
+								<div id="cargorise-detect-status" class="tool-status">尚未检测</div>
+								<pre id="cargorise-detect-output" class="tool-output hidden"></pre>
+							</section>
+
+							<section class="tool-section disabled">
+								<h3>创建 Rust 项目</h3>
+								<p>第一阶段仅开放环境检测。创建项目会在确认安全边界后启用。</p>
+								<div class="tool-form">
+									<label>
+										项目名称
+										<input id="cargorise-name" type="text" placeholder="hello_world" disabled />
+									</label>
+									<label>
+										保存路径
+										<input id="cargorise-parent-dir" type="text" placeholder="D:\Projects\Rust" disabled />
+									</label>
+									<label>
+										IDE
+										<select id="cargorise-ide" disabled>
+											<option value="auto">自动</option>
+											<option value="vscode">VS Code</option>
+											<option value="rustrover">RustRover</option>
+											<option value="none">不打开</option>
+										</select>
+									</label>
+									<label class="tool-checkbox">
+										<input id="cargorise-open-after" type="checkbox" disabled />
+										创建后打开 IDE
+									</label>
+									<button id="cargorise-create-btn" class="btn-primary" disabled>下一阶段开放</button>
+								</div>
+								<pre id="cargorise-create-output" class="tool-output hidden"></pre>
+							</section>
 						</div>
 					</div>
 				</div>

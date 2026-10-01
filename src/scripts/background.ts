@@ -52,10 +52,15 @@ export function initBackground() {
 	}
 
 	function getBgConfig(): BgConfig {
+		const savedOpacity = localStorage.getItem('bgOpacity');
+		const savedBlur = localStorage.getItem('bgBlur');
+		const opacity = savedOpacity === null ? NaN : parseFloat(savedOpacity);
+		const blur = savedBlur === null ? NaN : parseInt(savedBlur);
+
 		return {
 			url: localStorage.getItem('bgUrl') || DEFAULT_BG.url,
-			opacity: parseFloat(localStorage.getItem('bgOpacity') || '') || DEFAULT_BG.opacity,
-			blur: parseInt(localStorage.getItem('bgBlur') || '') || DEFAULT_BG.blur,
+			opacity: Number.isNaN(opacity) ? DEFAULT_BG.opacity : opacity,
+			blur: Number.isNaN(blur) ? DEFAULT_BG.blur : blur,
 			sidebar: localStorage.getItem('bgSidebar') !== 'false',
 			chat: localStorage.getItem('bgChat') !== 'false',
 			transparent: localStorage.getItem('bgTransparent') === 'true'

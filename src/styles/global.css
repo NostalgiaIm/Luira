@@ -314,4 +314,23 @@ body {
 .thinking-indicator .dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
 
+/* ========== CargoRise 工具面板 ========== */
+.cargorise-panel { flex: 1; overflow: hidden; }
+.cargorise-panel h2 { margin: 0; padding: 15px 20px; border-bottom: 1px solid rgba(234, 234, 234, 0.4); font-size: 1.1rem; background: var(--chat-header-bg); border-radius: 12px 12px 0 0; transition: background 0.3s; }
+.tool-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+.tool-section { border: 1px solid rgba(234, 234, 234, 0.6); border-radius: 10px; padding: 16px; background: rgba(255, 255, 255, 0.35); }
+.tool-section.disabled { opacity: 0.7; }
+.tool-section-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.tool-section h3 { margin: 0 0 6px; font-size: 1rem; color: #111; }
+.tool-section p { margin: 0 0 12px; color: #6b7280; font-size: 0.9rem; }
+.tool-status { margin-top: 12px; color: #374151; font-size: 0.9rem; }
+.tool-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tool-form label { display: flex; flex-direction: column; gap: 6px; color: #374151; font-size: 0.9rem; }
+.tool-form input, .tool-form select { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; outline: none; background: rgba(255, 255, 255, 0.65); font-size: 0.95rem; }
+.tool-form input:focus, .tool-form select:focus { border-color: var(--accent-color); }
+.tool-form input:disabled, .tool-form select:disabled, .tool-form button:disabled { cursor: not-allowed; opacity: 0.7; }
+.tool-checkbox { flex-direction: row !important; align-items: center; }
+.tool-checkbox input { width: auto; }
+.tool-output { margin: 12px 0 0; padding: 12px; border-radius: 8px; background: #111827; color: #e5e7eb; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; max-height: 260px; }
+
 .hidden { display: none; }

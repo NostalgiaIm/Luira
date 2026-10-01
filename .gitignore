@@ -21,6 +21,11 @@ pnpm-debug.log*
 README.md
 AGENTS.md
 CLAUDE.md
+PROJECT_ARCHITECTURE_REPORT.md
+
+# local CargoRise checkout
+# CargoRise is maintained as a separate local repository and is invoked through CARGORISE_BIN.
+Tools-Part/
 
 # macOS-specific files
 .DS_Store
